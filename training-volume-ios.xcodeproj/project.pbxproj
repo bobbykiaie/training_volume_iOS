@@ -10,9 +10,20 @@
 		3B10097A29FA27B100A60FDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10097929FA27B100A60FDB /* AppDelegate.swift */; };
 		3B10097C29FA27B100A60FDB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10097B29FA27B100A60FDB /* SceneDelegate.swift */; };
 		3B10097E29FA27B100A60FDB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10097D29FA27B100A60FDB /* ViewController.swift */; };
-		3B10098129FA27B100A60FDB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B10097F29FA27B100A60FDB /* Main.storyboard */; };
 		3B10098329FA27B300A60FDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B10098229FA27B300A60FDB /* Assets.xcassets */; };
 		3B10098629FA27B300A60FDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B10098429FA27B300A60FDB /* LaunchScreen.storyboard */; };
+		3B10098E29FA28EE00A60FDB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10098D29FA28EE00A60FDB /* LoginViewController.swift */; };
+		3B10099029FA2CD400A60FDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B10098F29FA2CD400A60FDB /* GoogleService-Info.plist */; };
+		3B10099329FA2D5800A60FDB /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3B10099229FA2D5800A60FDB /* FirebaseAuth */; };
+		3B10099529FA2D5800A60FDB /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3B10099429FA2D5800A60FDB /* FirebaseDatabase */; };
+		3B10099729FA2D5800A60FDB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 3B10099629FA2D5800A60FDB /* FirebaseFirestore */; };
+		3B10099929FA2D5800A60FDB /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3B10099829FA2D5800A60FDB /* FirebaseFirestoreSwift */; };
+		3B10099B29FA2D5800A60FDB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3B10099A29FA2D5800A60FDB /* FirebaseStorage */; };
+		3B10099D29FA2DC500A60FDB /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10099C29FA2DC500A60FDB /* RegistrationViewController.swift */; };
+		3B10099F29FA318900A60FDB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10099E29FA318900A60FDB /* HomeViewController.swift */; };
+		3B1009A129FA319900A60FDB /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1009A029FA319900A60FDB /* ChartViewController.swift */; };
+		3B1009A329FA31C000A60FDB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1009A229FA31C000A60FDB /* MainTabBarController.swift */; };
+		3B1009A529FB46D500A60FDB /* CreateRoutineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1009A429FB46D500A60FDB /* CreateRoutineViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +31,16 @@
 		3B10097929FA27B100A60FDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3B10097B29FA27B100A60FDB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3B10097D29FA27B100A60FDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3B10098029FA27B100A60FDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3B10098229FA27B300A60FDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B10098529FA27B300A60FDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B10098729FA27B300A60FDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B10098D29FA28EE00A60FDB /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3B10098F29FA2CD400A60FDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3B10099C29FA2DC500A60FDB /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		3B10099E29FA318900A60FDB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		3B1009A029FA319900A60FDB /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
+		3B1009A229FA31C000A60FDB /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		3B1009A429FB46D500A60FDB /* CreateRoutineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutineViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +48,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B10099529FA2D5800A60FDB /* FirebaseDatabase in Frameworks */,
+				3B10099329FA2D5800A60FDB /* FirebaseAuth in Frameworks */,
+				3B10099729FA2D5800A60FDB /* FirebaseFirestore in Frameworks */,
+				3B10099B29FA2D5800A60FDB /* FirebaseStorage in Frameworks */,
+				3B10099929FA2D5800A60FDB /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +62,7 @@
 		3B10096D29FA27B100A60FDB = {
 			isa = PBXGroup;
 			children = (
+				3B1009A429FB46D500A60FDB /* CreateRoutineViewController.swift */,
 				3B10097829FA27B100A60FDB /* training-volume-ios */,
 				3B10097729FA27B100A60FDB /* Products */,
 			);
@@ -56,13 +79,18 @@
 		3B10097829FA27B100A60FDB /* training-volume-ios */ = {
 			isa = PBXGroup;
 			children = (
+				3B10098F29FA2CD400A60FDB /* GoogleService-Info.plist */,
 				3B10097929FA27B100A60FDB /* AppDelegate.swift */,
 				3B10097B29FA27B100A60FDB /* SceneDelegate.swift */,
 				3B10097D29FA27B100A60FDB /* ViewController.swift */,
-				3B10097F29FA27B100A60FDB /* Main.storyboard */,
 				3B10098229FA27B300A60FDB /* Assets.xcassets */,
 				3B10098429FA27B300A60FDB /* LaunchScreen.storyboard */,
 				3B10098729FA27B300A60FDB /* Info.plist */,
+				3B10098D29FA28EE00A60FDB /* LoginViewController.swift */,
+				3B10099C29FA2DC500A60FDB /* RegistrationViewController.swift */,
+				3B10099E29FA318900A60FDB /* HomeViewController.swift */,
+				3B1009A029FA319900A60FDB /* ChartViewController.swift */,
+				3B1009A229FA31C000A60FDB /* MainTabBarController.swift */,
 			);
 			path = "training-volume-ios";
 			sourceTree = "<group>";
@@ -83,6 +111,13 @@
 			dependencies = (
 			);
 			name = "training-volume-ios";
+			packageProductDependencies = (
+				3B10099229FA2D5800A60FDB /* FirebaseAuth */,
+				3B10099429FA2D5800A60FDB /* FirebaseDatabase */,
+				3B10099629FA2D5800A60FDB /* FirebaseFirestore */,
+				3B10099829FA2D5800A60FDB /* FirebaseFirestoreSwift */,
+				3B10099A29FA2D5800A60FDB /* FirebaseStorage */,
+			);
 			productName = "training-volume-ios";
 			productReference = 3B10097629FA27B100A60FDB /* training-volume-ios.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +146,9 @@
 				Base,
 			);
 			mainGroup = 3B10096D29FA27B100A60FDB;
+			packageReferences = (
+				3B10099129FA2D5800A60FDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 3B10097729FA27B100A60FDB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,9 +163,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B10099029FA2CD400A60FDB /* GoogleService-Info.plist in Resources */,
 				3B10098629FA27B300A60FDB /* LaunchScreen.storyboard in Resources */,
 				3B10098329FA27B300A60FDB /* Assets.xcassets in Resources */,
-				3B10098129FA27B100A60FDB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +176,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B10098E29FA28EE00A60FDB /* LoginViewController.swift in Sources */,
+				3B1009A129FA319900A60FDB /* ChartViewController.swift in Sources */,
+				3B1009A329FA31C000A60FDB /* MainTabBarController.swift in Sources */,
 				3B10097E29FA27B100A60FDB /* ViewController.swift in Sources */,
 				3B10097A29FA27B100A60FDB /* AppDelegate.swift in Sources */,
 				3B10097C29FA27B100A60FDB /* SceneDelegate.swift in Sources */,
+				3B1009A529FB46D500A60FDB /* CreateRoutineViewController.swift in Sources */,
+				3B10099D29FA2DC500A60FDB /* RegistrationViewController.swift in Sources */,
+				3B10099F29FA318900A60FDB /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3B10097F29FA27B100A60FDB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3B10098029FA27B100A60FDB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3B10098429FA27B300A60FDB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -290,9 +326,10 @@
 				DEVELOPMENT_TEAM = 2232269234;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "training-volume-ios/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -318,9 +355,10 @@
 				DEVELOPMENT_TEAM = 2232269234;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "training-volume-ios/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -358,6 +396,45 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3B10099129FA2D5800A60FDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3B10099229FA2D5800A60FDB /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B10099129FA2D5800A60FDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		3B10099429FA2D5800A60FDB /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B10099129FA2D5800A60FDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		3B10099629FA2D5800A60FDB /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B10099129FA2D5800A60FDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		3B10099829FA2D5800A60FDB /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B10099129FA2D5800A60FDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		3B10099A29FA2D5800A60FDB /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B10099129FA2D5800A60FDB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3B10096E29FA27B100A60FDB /* Project object */;
 }
