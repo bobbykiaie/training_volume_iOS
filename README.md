@@ -26,4 +26,4 @@ Sign up or log in: When you first open the app, you'll be prompted to sign up or
 Create a workout routine: From the home screen, tap the "+" button to create a new workout routine.
 Add exercises to your routine: After creating a routine, you can add exercises to it.
 Start a workout: From the home screen, tap on a routine to start a workout. As you perform each exercise, enter the number of sets and reps you did.
-View your progress: From the home screen, tap the "Charts" tab to view your progress over time.
+Logout: Tap settings tab to logout
