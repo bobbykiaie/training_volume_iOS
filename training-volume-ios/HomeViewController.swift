@@ -1,112 +1,12 @@
-
 import FirebaseFirestore
 import FirebaseAuth
 import UIKit
 
-struct Routine {
-    let id: String
-    let name: String
-    var workouts: [Workout]
-    var isExpanded: Bool
-}
-struct Workout {
-    let id: String
-    let name: String
-}
-
-class RoutineTableViewCell: UITableViewCell {
-    
-    static let identifier = "RoutineTableViewCell"
-    
-    var routine: Routine? {
-        didSet {
-            updateUI()
-        }
-    }
-    private let createWorkoutButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Create Workout", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        button.backgroundColor = .systemBlue
-        button.tintColor = .white
-        button.layer.cornerRadius = 5
-        return button
-    }()
-
-    
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
-
-        return label
-    }()
-    
-    private let workoutsStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        return stackView
-    }()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(workoutsStackView)
-        setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        workoutsStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            workoutsStackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
-            workoutsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            workoutsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            workoutsStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
-        ])
-    }
-    
-    private func updateUI() {
-        guard let routine = routine else { return }
-        
-        nameLabel.text = routine.name
-        
-        workoutsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
-        if routine.isExpanded {
-            if routine.workouts.isEmpty {
-                let label = UILabel()
-                label.text = "No workouts in this routine."
-                label.textColor = .gray
-                workoutsStackView.addArrangedSubview(label)
-                
-                // Add the "Create Workout" button to the stack view
-                workoutsStackView.addArrangedSubview(createWorkoutButton)
-            } else {
-                // ...
-                print("hi")
-            }
-        }
-    }
-}
-
 class HomeViewController: UIViewController {
-    
     private var routines = [Routine]()
     private let db = Firestore.firestore()
-
-    private var expandedIndexPaths: Set<IndexPath> = [] // Change this line
-
+    private var expandedIndexPaths: Set<IndexPath> = []
+    
     private let templatesLabel: UILabel = {
         let label = UILabel()
         label.text = "Templates"
@@ -124,72 +24,129 @@ class HomeViewController: UIViewController {
         return button
     }()
     
-    private let tableView: UITableView = {
+    private let routinesTableView: UITableView = {
         let tableView = UITableView()
         return tableView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchRoutines()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-      
+
         view.addSubview(templatesLabel)
         view.addSubview(createRoutineButton)
-        view.addSubview(tableView)
-             
+        view.addSubview(routinesTableView)
+
         setupTableView()
-        fetchRoutines()
         setupUI()
     }
     
     private func fetchRoutines() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let user = Auth.auth().currentUser
+        if let user = user {
+            db.collection("users").document(user.uid).collection("routines").order(by: "name").getDocuments { [weak self] snapshot, error in
+                if let error = error {
+                    print("Error fetching routines: \(error)")
+                } else if let snapshot = snapshot {
+                    let routines = snapshot.documents.compactMap { document -> Routine? in
+                        do {
+                            let data = try JSONSerialization.data(withJSONObject: document.data(), options: [])
+                            var routine = try JSONDecoder().decode(Routine.self, from: data)
+                            routine.id = document.documentID
 
-        db.collection("users").document(userId).collection("routines").addSnapshotListener { querySnapshot, error in
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(error!)")
-                return
-            }
-
-            self.routines = documents.map { queryDocumentSnapshot -> Routine in
-                let data = queryDocumentSnapshot.data()
-                let id = queryDocumentSnapshot.documentID
-                let name = data["name"] as? String ?? ""
-                let workoutsData = data["workouts"] as? [[String: Any]] ?? []
-
-                let workouts = workoutsData.map { workoutData -> Workout in
-                    let workoutId = workoutData["id"] as? String ?? ""
-                    let workoutName = workoutData["name"] as? String ?? ""
-                    return Workout(id: workoutId, name: workoutName)
+                            if let workoutsArray = document.data()["workouts"] as? [[String: Any]] {
+                                for (index, workoutData) in workoutsArray.enumerated() {
+                                    if let exercisesData = try? JSONSerialization.data(withJSONObject: workoutData["exercises"] as? [[String: Any]] ?? [], options: []) {
+                                        let exercises = try JSONDecoder().decode([Exercise].self, from: exercisesData)
+                                        routine.workouts[index].exercises = exercises
+                                    }
+                                }
+                            }
+                            print(routine)
+                            return routine
+                        } catch {
+                            print("Error decoding routine: \(error)")
+                            return nil
+                        }
+                    }
+                    
+                    self?.routines = routines
+                    DispatchQueue.main.async {
+                        self?.routinesTableView.reloadData()
+                    }
                 }
-
-                return Routine(id: id, name: name, workouts: workouts, isExpanded: false)
             }
-
-            // Reload the routines table view
-            self.tableView.reloadData()
         }
     }
-    
+
+    func updateRoutine(_ routine: Routine) {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        guard let routineId = routine.id else {
+            print("Error: routine ID is missing")
+            return
+        }
+        let routineRef = db.collection("users").document(userId).collection("routines").document(routineId)
+
+        routineRef.getDocument { document, error in
+            if let document = document, document.exists {
+                if var routineData = document.data() {
+                    routineData["workouts"] = routine.workouts.map { workout -> [String: Any] in
+                        return [
+                            "id": workout.id,
+                            "name": workout.name,
+                            "exercises": workout.exercises.map { exercise -> [String: Any] in
+                                return [
+                                    "id": exercise.id,
+                                    "name": exercise.name,
+                                    "sets": exercise.sets,
+                                    "reps": exercise.reps,
+                                    "muscle": exercise.muscle
+                                ]
+                            }
+                        ]
+                    }
+                    
+                    routineRef.updateData(routineData) { error in
+                        if let error = error {
+                            print("Error updating routine: \(error)")
+                        } else {
+                            print("Routine successfully updated")
+                        }
+                    }
+                }
+            } else {
+                print("Error fetching routine document: \(error?.localizedDescription ?? "unknown error")")
+            }
+        }
+    }
+
     @objc func createRoutineButtonTapped() {
         let createRoutineVC = CreateRoutineViewController()
-        createRoutineVC.modalPresentationStyle = .overFullScreen
-        createRoutineVC.modalTransitionStyle = .crossDissolve
+        createRoutineVC.modalPresentationStyle = .formSheet
+
+        createRoutineVC.onRoutineCreated = { [weak self] in
+            self?.fetchRoutines()
+        }
         self.present(createRoutineVC, animated: true, completion: nil)
     }
-    
+
     private func setupTableView() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        routinesTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: templatesLabel.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            routinesTableView.topAnchor.constraint(equalTo: templatesLabel.bottomAnchor),
+            routinesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            routinesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            routinesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
 
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(RoutineTableViewCell.self, forCellReuseIdentifier: RoutineTableViewCell.identifier)
+        routinesTableView.dataSource = self
+        routinesTableView.delegate = self
+        routinesTableView.register(RoutineTableViewCell.self, forCellReuseIdentifier: RoutineTableViewCell.identifier)
     }
     
     private func setupUI() {
@@ -201,27 +158,44 @@ class HomeViewController: UIViewController {
             templatesLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             createRoutineButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             createRoutineButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            tableView.topAnchor.constraint(equalTo: templatesLabel.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            routinesTableView.topAnchor.constraint(equalTo: templatesLabel.bottomAnchor),
+            routinesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            routinesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            routinesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
         createRoutineButton.addTarget(self, action: #selector(createRoutineButtonTapped), for: .touchUpInside)
     }
-}
+    }
+
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return routines.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoutineTableViewCell.identifier, for: indexPath) as! RoutineTableViewCell
         cell.routine = routines[indexPath.row]
+
+        cell.onCreateWorkoutTapped = { [weak self] (routine: Routine) in
+            let createWorkoutVC = CreateWorkoutViewController()
+            createWorkoutVC.routine = routine
+            createWorkoutVC.delegate = self
+            self?.navigationController?.pushViewController(createWorkoutVC, animated: true)
+        }
+
+        cell.onWorkoutTapped = { [weak self] (workout: Workout) in
+            print("Workout tapped: \(workout.name)")
+            let workoutDetailsVC = WorkoutDetailsViewController()
+            workoutDetailsVC.workout = workout
+            self?.navigationController?.pushViewController(workoutDetailsVC, animated: true)
+        }
+
+
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let routine = routines[indexPath.row]
         let cellHeight: CGFloat
@@ -229,11 +203,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             let workoutsCount = routine.workouts.isEmpty ? 1 : routine.workouts.count
             cellHeight = CGFloat(50 + workoutsCount * 44 + 50)
         } else {
+           
             cellHeight = 70 // Increase the height to fit the routine name when collapsed
         }
         return cellHeight
     }
-
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.beginUpdates()
@@ -252,6 +226,31 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.reloadRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
     }
+    }
 
+
+extension HomeViewController: CreateWorkoutDelegate {
+    func didCreateWorkout(_ workout: Workout, forRoutine routine: Routine) {
+        if let index = routines.firstIndex(where: { $0.id == routine.id }) {
+            var updatedRoutine = routine
+            updatedRoutine.workouts.append(workout)
+            routines[index] = updatedRoutine
+
+            if let indexPath = expandedIndexPaths.first(where: { $0.row == index }) {
+                routinesTableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
+
+    func workoutSaved() {
+        DispatchQueue.main.async {
+            self.routinesTableView.reloadData()
+        }
+    }
 }
 
+extension HomeViewController: CreateRoutineDelegate {
+    func routineCreated() {
+        fetchRoutines()
+    }
+}
